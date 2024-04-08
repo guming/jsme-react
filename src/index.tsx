@@ -8,6 +8,7 @@ declare global {
   }
 }
 
+let jsmeIsSetupInitiated = false;
 let jsmeIsLoadedGlobal = false;
 const jsmeCallbacks: Array<() => void> = [];
 
@@ -16,11 +17,26 @@ window['jsmeOnLoad'] = () => {
   jsmeCallbacks.forEach(c => c());
 }
 
+const DEFAULT_SRC = "https://jsme-editor.github.io/dist/jsme/jsme.nocache.js";
+
 // Export the setup function so that a user can override the super-lazy loading behaviour and choose to load it more eagerly.
-export function setup(src = "https://jsme-editor.github.io/dist/jsme/jsme.nocache.js") {
-  const script = document.createElement('script');
-  script.src = src;
-  document.head.appendChild(script);
+export function jsmeSetup(src = DEFAULT_SRC) {
+  const srcSlashPos = src.lastIndexOf('/');
+  const srcFilename = src.substring(srcSlashPos + 1);
+  const elements = Array.from(document.getElementsByTagName('script'));
+  const alreadyExists = elements.some(el => el.src?.endsWith(srcFilename));
+  if (!alreadyExists) {
+    doJsmeSetup(src);
+  }
+}
+
+export function doJsmeSetup(src = DEFAULT_SRC) {
+  if (!jsmeIsSetupInitiated) {
+    jsmeIsSetupInitiated = true;
+    const script = document.createElement('script');
+    script.src = src;
+    document.head.appendChild(script);
+  }
 }
 
 let jsmeCounter = 0;
@@ -31,6 +47,8 @@ export interface JsmeProps {
   smiles?: string,
   options?: string | string[],
   onChange?: (smiles: string) => void,
+  src?: string,
+  setup?: boolean,
 }
 
 // noinspection JSUnusedGlobalSymbols
@@ -45,6 +63,8 @@ export function Jsme(props: JsmeProps) {
   const options = Array.isArray(props.options) ? props.options.join(',') : props.options;
   const smiles = props.smiles;
 
+  const { src, setup } = props;
+
   React.useEffect(() => {
     const setJsmeIsLoadedToTrue = () => setJsmeIsLoaded(true);
     if (!jsmeIsLoadedGlobal) {
@@ -57,6 +77,14 @@ export function Jsme(props: JsmeProps) {
       }
     }
   }, []);
+
+  React.useEffect(() => {
+    if (setup) {
+      doJsmeSetup(src);
+    } else if (setup !== false) {
+      jsmeSetup(src);
+    }
+  }, [setup, src]);
 
   React.useEffect(() => {
     if (jsmeIsLoaded) {
