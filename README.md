@@ -1,5 +1,7 @@
 # @loschmidt/jsme-react
 
+[![npm version](https://img.shields.io/npm/v/@loschmidt/jsme-react.svg)](https://www.npmjs.com/package/@loschmidt/jsme-react)
+
 This project wraps the BSD licensed [JSME molecule editor](https://peter-ertl.com/jsme/) (by B. Bienfait and P. Ertl) in a React component for easy use in React apps.
 
 Please note that JSME was originally developed in Java and transpiled to Javascript. By modern Javascript standards it uses a few unconventional techniques to load. To accomodate this, this library will perform a side effect when the component is being loaded in the browser of appending the script tag that loads the JSME Javascript entrypoint (which will then trigger a few more loads). This works with lazy loading of Javascript modules.
