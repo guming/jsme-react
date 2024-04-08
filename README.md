@@ -1,4 +1,4 @@
-# jsme-react
+# @loschmidt/jsme-react
 
 This project wraps the BSD licensed [JSME molecule editor](https://peter-ertl.com/jsme/) (by B. Bienfait and P. Ertl) in a React component for easy use in React apps.
 
@@ -15,15 +15,15 @@ If for some reason you want this loading to happen at a specific (early) point i
 #### Step one: add this library to your project
 
 ```bash
-npm install jsme-react
+npm install @loschmidt/jsme-react
 # or
-yarn add jsme-react
+yarn add @loschmidt/jsme-react
 ```
 
 #### Step two: use the React component
 
 ```jsx
-import { Jsme } from 'jsme-react'
+import { Jsme } from '@loschmidt/jsme-react'
 
 export default function App() {
   const logSmiles = (smiles) => {
@@ -66,7 +66,7 @@ npm start
 # In the "example" directory
 
 npm install
-npm link jsme-react
+npm link @loschmidt/jsme-react
 npm start
 ```
 

@@ -1,6 +1,6 @@
 {
-  "name": "jsme-react",
-  "version": "0.1.0-alpha.1",
+  "name": "@loschmidt/jsme-react",
+  "version": "1.0.0-alpha.0",
   "description": "Jsme react wrapper - allows using the JSME molecule editor as a react component",
   "author": "Simeon Borko",
   "license": "BSD-3-Clause",

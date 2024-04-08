@@ -1,4 +1,4 @@
-import {Jsme} from "jsme-react";
+import {Jsme} from "@loschmidt/jsme-react";
 import React from "react";
 
 function App() {
