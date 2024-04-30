@@ -62,6 +62,11 @@ export function Jsme(props: JsmeProps) {
   const options = Array.isArray(props.options) ? props.options.join(',') : props.options;
   const smiles = props.smiles;
 
+  const onChangeRef = React.useRef(props.onChange);
+  React.useEffect(() => {
+    onChangeRef.current = props.onChange;
+  }, [props.onChange]);
+
   const { src, setup } = props;
 
   React.useEffect(() => {
@@ -97,7 +102,9 @@ export function Jsme(props: JsmeProps) {
     myRef.current?.appendChild(el);
 
     const jsmeApplet = new window['JSApplet'].JSME(id, width, height, options && {options: options});
-    jsmeApplet.setCallBack("AfterStructureModified", handleChange);
+    jsmeApplet.setCallBack("AfterStructureModified", (jsmeEvent) => {
+      onChangeRef.current?.(jsmeEvent.src.smiles());
+    });
     jsmeApplet.readGenericMolecularInput(props.smiles);
     setJsmeApplet(jsmeApplet);
 
@@ -118,10 +125,6 @@ export function Jsme(props: JsmeProps) {
   React.useEffect(() => {
     jsmeApplet?.readGenericMolecularInput(smiles);
   }, [jsmeApplet, smiles]);
-
-  const handleChange = (jsmeEvent) => {
-    props.onChange?.(jsmeEvent.src.smiles());
-  }
 
   return <div ref={myRef}/>
 }
