@@ -53,8 +53,7 @@ export interface JsmeProps {
 
 // noinspection JSUnusedGlobalSymbols
 export function Jsme(props: JsmeProps) {
-  const myRef = React.useRef(null);
-  const id = React.useState(() => "jsme" + jsmeCounter++)[0];
+  const myRef = React.useRef<HTMLDivElement | null>(null);
   const [jsmeApplet, setJsmeApplet] = React.useState<any>(null);
   const [jsmeIsLoaded, setJsmeIsLoaded] = React.useState(jsmeIsLoadedGlobal);
 
@@ -86,10 +85,26 @@ export function Jsme(props: JsmeProps) {
     }
   }, [setup, src]);
 
+  // width, height, options are not in dependencies - they should not trigger this effect
   React.useEffect(() => {
-    if (jsmeIsLoaded) {
-      handleJsmeLoad();
+    if (!jsmeIsLoaded) {
+      return;
     }
+
+    const id = "jsme" + jsmeCounter++;
+    const el = document.createElement("div");
+    el.id = id;
+    myRef.current?.appendChild(el);
+
+    const jsmeApplet = new window['JSApplet'].JSME(id, width, height, options && {options: options});
+    jsmeApplet.setCallBack("AfterStructureModified", handleChange);
+    jsmeApplet.readGenericMolecularInput(props.smiles);
+    setJsmeApplet(jsmeApplet);
+
+    return () => {
+      document.getElementById(id)?.remove();
+      setJsmeApplet(null);
+    };
   }, [jsmeIsLoaded]);
 
   React.useEffect(() => {
@@ -104,16 +119,9 @@ export function Jsme(props: JsmeProps) {
     jsmeApplet?.readGenericMolecularInput(smiles);
   }, [jsmeApplet, smiles]);
 
-  const handleJsmeLoad = () => {
-    const jsmeApplet = new window['JSApplet'].JSME(id, width, height, options && {options: options});
-    jsmeApplet.setCallBack("AfterStructureModified", handleChange);
-    jsmeApplet.readGenericMolecularInput(props.smiles);
-    setJsmeApplet(jsmeApplet);
-  }
-
   const handleChange = (jsmeEvent) => {
     props.onChange?.(jsmeEvent.src.smiles());
   }
 
-  return <div ref={myRef} id={id}/>
+  return <div ref={myRef}/>
 }

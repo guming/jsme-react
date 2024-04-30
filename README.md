@@ -1,6 +1,7 @@
 # @loschmidt/jsme-react
 
 [![npm version](https://img.shields.io/npm/v/@loschmidt/jsme-react.svg)](https://www.npmjs.com/package/@loschmidt/jsme-react)
+[![npm downloads](https://img.shields.io/npm/dm/@loschmidt/jsme-react.svg)](https://www.npmjs.com/package/@loschmidt/jsme-react)
 
 This project wraps the BSD licensed [JSME molecule editor](https://peter-ertl.com/jsme/) (by B. Bienfait and P. Ertl) in a React component for easy use in React apps.
 
