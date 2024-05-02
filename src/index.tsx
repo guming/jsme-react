@@ -49,11 +49,13 @@ export interface JsmeProps {
   onChange?: (smiles: string) => void,
   src?: string,
   setup?: boolean,
+  disabled?: boolean,
 }
 
 // noinspection JSUnusedGlobalSymbols
 export function Jsme(props: JsmeProps) {
   const myRef = React.useRef<HTMLDivElement | null>(null);
+  const [el, setEl] = React.useState<HTMLDivElement | null>(null);
   const [jsmeApplet, setJsmeApplet] = React.useState<any>(null);
   const [jsmeIsLoaded, setJsmeIsLoaded] = React.useState(jsmeIsLoadedGlobal);
 
@@ -67,7 +69,11 @@ export function Jsme(props: JsmeProps) {
     onChangeRef.current = props.onChange;
   }, [props.onChange]);
 
-  const { src, setup } = props;
+  const {
+    src,
+    setup,
+    disabled,
+  } = props;
 
   React.useEffect(() => {
     const setJsmeIsLoadedToTrue = () => setJsmeIsLoaded(true);
@@ -106,10 +112,12 @@ export function Jsme(props: JsmeProps) {
       onChangeRef.current?.(jsmeEvent.src.smiles());
     });
     jsmeApplet.readGenericMolecularInput(props.smiles);
+    setEl(el);
     setJsmeApplet(jsmeApplet);
 
     return () => {
-      document.getElementById(id)?.remove();
+      el.remove();
+      setEl(null);
       setJsmeApplet(null);
     };
   }, [jsmeIsLoaded]);
@@ -125,6 +133,17 @@ export function Jsme(props: JsmeProps) {
   React.useEffect(() => {
     jsmeApplet?.readGenericMolecularInput(smiles);
   }, [jsmeApplet, smiles]);
+
+  React.useEffect(() => {
+    if (el !== null && disabled) {
+      el.style.opacity = '0.6';
+      el.style.pointerEvents = 'none';
+      return () => {
+        el.style.opacity = '1';
+        el.style.pointerEvents = 'auto';
+      }
+    }
+  }, [el, disabled]);
 
   return <div ref={myRef}/>
 }

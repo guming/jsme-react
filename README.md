@@ -34,6 +34,7 @@ Optional props
 * `smiles`: the smiles to display (if not set, an empty canvas will be shown)
 * `src`: url of the jsme source code. Default value is `"https://jsme-editor.github.io/dist/jsme/jsme.nocache.js"`
 * `setup`: boolean telling whether JSME script should be loaded by the Jsme component, `true` - JSME script will be loaded once, `false` - JSME script will never be loaded, `undefined` (default) - JSME script will be loaded once, if was not previously loaded using a script element (included by you as library user).
+* `disabled`: boolean. When true, user is not able to interact and opacity is decreased
 
 ## How to use
 

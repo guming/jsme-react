@@ -7,7 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Fixed using the onChange prop - always use the current function thanks to useRef
+- Fixed using the `onChange` prop - always use the current function thanks to useRef
+- Added `disabled` prop
 
 ## [1.0.1] - 2024-04-30
 
