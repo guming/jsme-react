@@ -4,7 +4,7 @@
   "description": "JSME React wrapper - use the JSME molecule editor as a React component",
   "author": "guming",
   "license": "BSD-3-Clause",
-  "repository": "guming/jsme2-react",
+  "repository": "guming/jsme-react",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
