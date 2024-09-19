@@ -1,4 +1,4 @@
-import {Jsme} from "@loschmidt/jsme-react";
+import {Jsme} from "@gumingcn/jsme-react";
 import React from "react";
 
 function App() {
@@ -7,7 +7,7 @@ function App() {
   }
   return (
     <div>
-      <Jsme height="300px" width="400px" options="oldlook,star" onChange={logSmiles}/>
+      <Jsme height="300px" width="400px" options="oldlook,star" guicolor="#FFFFFF" onChange={logSmiles}/>
       <Jsme height="300px" width="600px" smiles="CC=O" onChange={logSmiles}/>
     </div>
   )

@@ -65,8 +65,8 @@ export function Jsme(props: JsmeProps) {
   const height = typeof props.height === 'string' && props.height.toLowerCase().endsWith('px') ? props.height : `${props.height}px`;
   const options = Array.isArray(props.options) ? props.options.join(',') : props.options;
   const smiles = props.smiles;
-  const guicolor =  props.guicolor;
-  const guiAtomColor = props.guiAtomColor;
+  const guicolor =  props && props.guicolor? props.guicolor:'#FFFFFF';
+  const guiAtomColor = props.guiAtomColor? props.guiAtomColor:'#000000';
 
   const onChangeRef = React.useRef(props.onChange);
   React.useEffect(() => {
@@ -111,7 +111,7 @@ export function Jsme(props: JsmeProps) {
     el.id = id;
     myRef.current?.appendChild(el);
 
-    const jsmeApplet = new window['JSApplet'].JSME(id, width, height, options && {options: options},guicolor && {guicolor:guicolor},guiAtomColor && {guiAtomColor:guiAtomColor});
+    const jsmeApplet = new window['JSApplet'].JSME(id, width, height, options && {options: options, guicolor:guicolor,guiAtomColor:guiAtomColor});
     jsmeApplet.setCallBack("AfterStructureModified", (jsmeEvent) => {
       onChangeRef.current?.(jsmeEvent.src.smiles());
     });
