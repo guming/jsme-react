@@ -1,10 +1,10 @@
 {
-  "name": "@loschmidt/jsme-react",
-  "version": "1.0.2",
+  "name": "@gumingcn/jsme-react",
+  "version": "1.0.0",
   "description": "JSME React wrapper - use the JSME molecule editor as a React component",
-  "author": "Simeon Borko",
+  "author": "guming",
   "license": "BSD-3-Clause",
-  "repository": "loschmidt/jsme-react",
+  "repository": "guming/jsme2-react",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
@@ -12,7 +12,7 @@
     "src"
   ],
   "engines": {
-    "node": ">=20",
+    "node": ">=18",
     "npm": ">=10"
   },
   "scripts": {
@@ -20,7 +20,7 @@
     "start": "tsc -w"
   },
   "peerDependencies": {
-    "@types/react": "17 - 18"
+    "@types/react": "18"
   },
   "devDependencies": {
     "ts-node": "^10.9.2",
